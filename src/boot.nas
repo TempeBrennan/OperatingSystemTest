@@ -70,7 +70,9 @@ ADD	SI,1
 JMP print 
 
 loadcylinder:
-ADD ES,0x200
+MOV AX,ES
+ADD AX,0x20
+MOV ES,AX
 ADD CL,1
 CMP CL,18
 JBE loadsection
