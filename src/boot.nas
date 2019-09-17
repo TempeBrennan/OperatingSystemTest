@@ -71,7 +71,7 @@ JMP print
 
 loadcylinder:
 MOV AX,ES
-ADD AX,0x20
+ADD AX,0x0020
 MOV ES,AX
 ADD CL,1
 CMP CL,18
