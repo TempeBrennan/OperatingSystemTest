@@ -77,10 +77,10 @@ JBE loadsection
 ADD CH,1
 MOV CL,1
 CMP CH,10
-JBE loadsection
+JB loadsection
 ADD DH,1
 CMP DH,2
-JBE loadsection
+JB loadsection
 
 loop:
 HLT
