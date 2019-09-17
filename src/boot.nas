@@ -74,13 +74,16 @@ ADD ES,0x200
 ADD CL,1
 CMP CL,18
 JBE loadsection
+MOV CL,1
+ADD DH,1
+CMP DH,2
+JB loadsection
+MOV DH,0
 ADD CH,1
 MOV CL,1
 CMP CH,10
 JB loadsection
-ADD DH,1
-CMP DH,2
-JB loadsection
+
 
 loop:
 HLT
