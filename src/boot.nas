@@ -82,7 +82,6 @@ CMP DH,2
 JB loadsection
 MOV DH,0
 ADD CH,1
-MOV CL,1
 CMP CH,10
 JB loadsection
 
