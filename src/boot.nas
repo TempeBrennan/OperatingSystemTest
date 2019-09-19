@@ -39,6 +39,7 @@ ADD	SI,1
 JMP log
 
 read:
+MOV ES,0x8200
 MOV SI,0
 MOV AH,0x02
 MOV AL,0x01
@@ -46,7 +47,7 @@ MOV CH,0
 MOV CL,2
 MOV DH,0
 MOV DL,0
-MOV ES,0x8200
+
 MOV BX,0
 
 loadsection:
