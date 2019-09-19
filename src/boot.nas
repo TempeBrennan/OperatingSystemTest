@@ -25,6 +25,12 @@ DB  "FAT12   "
 RESB    18
 
 entry:
+;初始化
+MOV AX,0
+MOV SS,AX
+MOV SP,0x7c00
+MOV DS,AX
+
 MOV SI,information
 MOV AH,0x0E
 MOV	BH,0x00
@@ -96,6 +102,7 @@ CMP CH,10
 JB loadsection
 
 
+
 loop:
 HLT
 JMP loop
@@ -104,7 +111,7 @@ JMP loop
 information:
 DB  0x0A,0x0A
 DB  "Welcome to my computer!"
-DB  0x0A,0x0A
+DB  0x0A,0x0A,0x00
 
 loaderrorinformation:
 DB  0x0A,0x0A
