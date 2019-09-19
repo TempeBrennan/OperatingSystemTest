@@ -56,9 +56,16 @@ INT 0x13
 JNC loadcylinder
 ADD SI,1
 CMP SI,5
-JBE read
+JAE loaderror
+
+;这里载入失败，需要做一次重置
+MOV AH,0x00
+MOV DL,0x00
+INT 0x13
+JMP read
 
 ;否则就开始输出加载错误的信息
+loaderror:
 MOV SI,loaderrorinformation
 MOV AH,0x0E
 MOV	BH,0x00
