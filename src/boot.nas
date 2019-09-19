@@ -41,10 +41,11 @@ JMP firstprint
 load:
 MOV AX,0x0820
 MOV ES,AX
-MOV SI,0
 MOV CH,0
 MOV CL,2
 MOV DH,0
+loadsection:
+MOV SI,0
 read:
 MOV AH,0x02
 MOV AL,0x01
@@ -52,7 +53,6 @@ MOV DL,0x00
 
 MOV BX,0
 
-loadsection:
 INT 0x13
 JNC loadcylinder
 ADD SI,1
