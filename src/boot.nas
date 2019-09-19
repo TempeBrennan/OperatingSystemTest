@@ -30,15 +30,15 @@ MOV AH,0x0E
 MOV	BH,0x00
 MOV BL,0xFF
 
-log:
+firstprint:
 MOV	AL,[SI]
 CMP	AL,0
-JE read
+JE load
 INT 0x10
 ADD	SI,1
-JMP log
+JMP firstprint
 
-
+load:
 MOV AX,0x0820
 MOV ES,AX
 MOV SI,0
