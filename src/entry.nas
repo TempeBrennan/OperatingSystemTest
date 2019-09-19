@@ -1,0 +1,8 @@
+
+MOV AH,0x00
+MOV AL,0x13
+INT 0x10
+
+loop:
+	HTL
+	JMP loop
