@@ -9,9 +9,8 @@ img: entry
 create:
 	./tools/make.exe img
 
+# 注意下只有copy命令需要用反斜线
 run: 
 	./tools/make.exe create
-	# 注意下只有copy命令需要用\
 	copy .\output\helloos.img .\tools\qemu\fdimage0.bin
 	./tools/make.exe -C ./tools/qemu
-	
