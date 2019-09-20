@@ -4,5 +4,5 @@ MOV AL,0x13
 INT 0x10
 
 loop:
-	HTL
+	HLT
 	JMP loop
