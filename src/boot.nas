@@ -102,6 +102,7 @@ CMP CH,10
 JB loadsection
 
 
+JMP 0xC200
 
 loop:
 HLT
