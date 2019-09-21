@@ -39,6 +39,18 @@ MOV FS,AX
 MOV GS,AX
 MOV SS,AX
 
+;4. ³ÌÐò¿½±´
+
+
+copy:
+MOV EAX,[ESI]
+ADD ESI,4
+MOV [EDI],EAX
+ADD EDI,4
+SUB ECX,1
+JNZ copy
+RET
+
 wait:
 IN AL,0x64
 AND AL,0x02
