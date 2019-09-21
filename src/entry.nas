@@ -23,10 +23,10 @@ CALL wait
 
 
 ;3. 进入保护模式，并初始化寄存器
-[instrset "i486p"]
+[INSTRSET "i486p"]
 LGDT [GDTR0]
 MOV EAX,CR0
-AND EAX,0x7eFFFFFF
+AND EAX,0x7FFFFFFF
 OR EAX,0x00000001
 MOV CR0,EAX
 JMP init
@@ -56,14 +56,6 @@ MOV EDI,0x00280000
 MOV ECX,512*1024/4
 call copy
 
-copy:
-MOV EAX,[ESI]
-ADD ESI,4
-MOV [EDI],EAX
-ADD EDI,4
-SUB ECX,1
-JNZ copy
-RET
 
 ;5. 跳转到bootpack并开始执行main方法
 MOV EBX,bootpack
@@ -80,7 +72,16 @@ call copy
 
 skip:
 MOV ESP,[EBX+12]
-JMP DWRD 2*8:0x00000016
+JMP DWRD 2*8:0x0000001B
+
+copy:
+MOV EAX,[ESI]
+ADD ESI,4
+MOV [EDI],EAX
+ADD EDI,4
+SUB ECX,1
+JNZ copy
+RET
 
 wait:
 IN AL,0x64
@@ -91,7 +92,7 @@ RET
 
 ALIGNB 16
 GDT0:
-RESB 16
+RESB 8
 DW 0xFFFF,0x0000,0x9200,0x00CF
    0xFFFF,0x0000,0x9A28,0x0047
 DW 0
