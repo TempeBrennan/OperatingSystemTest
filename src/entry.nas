@@ -1,8 +1,12 @@
 
+;设置画面模式是 320px*200px
 MOV AH,0x00
 MOV AL,0x13
 INT 0x10
 
-loop:
-	HLT
-	JMP loop
+;1. 关闭所有中断
+MOV AL,0XFF
+OUT 0X21,AL
+NOP
+OUT 0XA1,AL
+CLI
