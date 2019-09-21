@@ -20,6 +20,25 @@ MOV AL,0xDF
 OUT 0x60,AL
 CALL wait
 
+
+
+;3. 进入保护模式，并初始化寄存器
+[instrset "i486p"]
+LGDT [GDTR0]
+MOV EAX,CR0
+AND EAX,0x7eFFFFFF
+OR EAX,0x00000001
+MOV CR0,EAX
+JMP init
+
+init:
+MOV AX,1*8
+MOV DS,AX
+MOV ES,AX
+MOV FS,AX
+MOV GS,AX
+MOV SS,AX
+
 wait:
 IN AL,0x64
 AND AL,0x02
