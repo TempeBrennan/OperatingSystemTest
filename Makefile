@@ -9,6 +9,9 @@ entry: ./src/entry.nas
 gas: ./src/main.c
 	./tools/cc1.exe -Itools/haribote/ -Os -Wall -quiet -o ./output/main.gas ./src/main.c
 
+nas: ./output/main.gas
+	./tools/gas2nask.exe -a ./output/main.gas ./output/main.nas
+
 img: boot entry
 	./tools/edimg.exe \
 	imgin:./tools/fdimg0at.tek \
