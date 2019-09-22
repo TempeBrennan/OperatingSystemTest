@@ -101,7 +101,7 @@ ADD CH,1
 CMP CH,10
 JB loadsection
 
-
+MOV	[0x0FF0],CH
 JMP 0xC200
 
 loop:
