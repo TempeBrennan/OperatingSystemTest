@@ -5,6 +5,10 @@ boot: ./src/boot.nas
 entry: ./src/entry.nas
 	./tools/nask.exe ./src/entry.nas ./output/entry.sys
 
+# 下面这一套是编译一个c文件的标准过程
+gas: ./src/main.c
+	./tools/cc1.exe -Itools/haribote/ -Os -Wall -quiet -o ./output/main.gas ./src/main.c
+
 img: boot entry
 	./tools/edimg.exe \
 	imgin:./tools/fdimg0at.tek \
