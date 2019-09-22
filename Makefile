@@ -3,32 +3,38 @@ boot: ./src/boot.nas
 	./tools/nask.exe ./src/boot.nas ./output/boot.bin
 
 entry: ./src/entry.nas
-	./tools/nask.exe ./src/entry.nas ./output/entry.sys
+	./tools/nask.exe ./src/entry.nas ./output/entry.bin
 
-# 下面这一套是编译一个c文件的标准过程
+# ****************下面这一套是编译一个c文件的标准过程******************************************************
 gas: ./src/main.c
 	./tools/cc1.exe -Itools/haribote/ -Os -Wall -quiet -o ./output/main.gas ./src/main.c
 
-nas: ./output/main.gas
+nas: gas
 	./tools/gas2nask.exe -a ./output/main.gas ./output/main.nas
 
-obj: ./output/main.nas
+obj: nas
 	./tools/nask.exe ./output/main.nas ./output/main.obj ./output/main.list
 
-bim: ./output/main.obj
+bim: obj
 	./tools/obj2bim.exe @./tools/haribote/haribote.rul \
 	out:./output/main.bim stack:3136k map:./output/main.map \
 	./output/main.obj 
 
-hrb: ./output/main.bim
+hrb: bim
 	./tools/bim2hrb.exe ./output/main.bim ./output/main.hrb 0
-# 编译完成，所有C语言以及辅助C语言的汇编都被打包进了一个hrb文件中
+# *****************编译完成，所有C语言以及辅助C语言的汇编都被打包进了一个hrb文件中****************************
 
-img: boot entry
+
+# *************************在这里给entry后面附加打包后的代码***********************************************
+merge: entry hrb
+	copy /B .\output\entry.bin+.\output\main.hrb .\output\haribote.sys
+# *************************merge结束，除了启动区的代码，剩余代码都合并到了sys文件中**************************
+
+img: boot merge
 	./tools/edimg.exe \
 	imgin:./tools/fdimg0at.tek \
 	wbinimg src:./output/boot.bin len:512 from:0 to:0 \
-	copy from:.\output\entry.sys to:@: \
+	copy from:.\output\haribote.sys to:@: \
 	imgout:./output/helloos.img
 
 # 使用make命令不要写成上面依赖的方式，要改成直接找make，传参数
