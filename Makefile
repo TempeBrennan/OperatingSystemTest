@@ -18,14 +18,21 @@ entry: ./src/entry.nas
 helper.obj: ./src/helper.nas
 	./tools/nask.exe ./src/helper.nas ./output/helper.obj
 
-bim: main.obj helper.obj paint.obj
+bim: main.obj helper.obj paint.obj hankaku.obj
 	./tools/obj2bim.exe @./tools/haribote/haribote.rul \
 	out:./output/main.bim stack:3136k map:./output/main.map \
-	./output/main.obj ./output/helper.obj ./output/paint.obj
+	./output/main.obj ./output/helper.obj ./output/paint.obj ./output/hankaku.obj
 
 hrb: bim
 	./tools/bim2hrb.exe ./output/main.bim ./output/main.hrb 0
 # *****************编译完成，所有C语言以及辅助C语言的汇编都被打包进了一个hrb文件中****************************
+
+# 额外混入字体对象
+hankaku.bin : ./library/hankaku.txt
+	./tools/makefont.exe ./library/hankaku.txt ./output/hankaku.bin
+
+hankaku.obj : hankaku.bin
+	./tools/bin2obj.exe ./output/hankaku.bin ./output/hankaku.obj _hankaku
 
 
 # *************************在这里给entry后面附加打包后的代码***********************************************
