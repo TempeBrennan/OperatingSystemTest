@@ -6,20 +6,19 @@ entry: ./src/entry.nas
 	./tools/nask.exe ./src/entry.nas ./output/entry.bin
 
 # ****************下面这一套是编译一个c文件的标准过程******************************************************
-gas: ./src/main.c
-	./tools/cc1.exe -Itools/haribote/ -Os -Wall -quiet -o ./output/main.gas ./src/main.c
+%.gas: ./src/%.c
+	./tools/cc1.exe -Itools/haribote/ -Os -Wall -quiet -o ./output/$*.gas ./src/$*.c
 
-nas: gas
-	./tools/gas2nask.exe -a ./output/main.gas ./output/main.nas
+%.nas: %.gas
+	./tools/gas2nask.exe -a ./output/$*.gas ./output/$*.nas
 
-obj: nas
-	./tools/nask.exe ./output/main.nas ./output/main.obj ./output/main.list
+%.obj: %.nas
+	./tools/nask.exe ./output/$*.nas ./output/$*.obj ./output/$*.list
 
-# 新增helper文件
-helperObj:
+helper.obj: ./src/helper.nas
 	./tools/nask.exe ./src/helper.nas ./output/helper.obj
 
-bim: obj helperObj
+bim: main.obj helper.obj
 	./tools/obj2bim.exe @./tools/haribote/haribote.rul \
 	out:./output/main.bim stack:3136k map:./output/main.map \
 	./output/main.obj ./output/helper.obj
