@@ -18,10 +18,10 @@ entry: ./src/entry.nas
 helper.obj: ./src/helper.nas
 	./tools/nask.exe ./src/helper.nas ./output/helper.obj
 
-bim: main.obj helper.obj
+bim: main.obj helper.obj paint.obj
 	./tools/obj2bim.exe @./tools/haribote/haribote.rul \
 	out:./output/main.bim stack:3136k map:./output/main.map \
-	./output/main.obj ./output/helper.obj
+	./output/main.obj ./output/helper.obj ./output/paint.obj
 
 hrb: bim
 	./tools/bim2hrb.exe ./output/main.bim ./output/main.hrb 0
