@@ -20,6 +20,10 @@ bim: ./output/main.obj
 	out:./output/main.bim stack:3136k map:./output/main.map \
 	./output/main.obj 
 
+hrb: ./output/main.bim
+	./tools/bim2hrb.exe ./output/main.bim ./output/main.hrb 0
+# 编译完成，所有C语言以及辅助C语言的汇编都被打包进了一个hrb文件中
+
 img: boot entry
 	./tools/edimg.exe \
 	imgin:./tools/fdimg0at.tek \
