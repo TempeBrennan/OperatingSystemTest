@@ -15,10 +15,14 @@ nas: gas
 obj: nas
 	./tools/nask.exe ./output/main.nas ./output/main.obj ./output/main.list
 
-bim: obj
+# 新增helper文件
+helperObj:
+	./tools/nask.exe ./src/helper.nas ./output/helper.obj
+
+bim: obj helperObj
 	./tools/obj2bim.exe @./tools/haribote/haribote.rul \
 	out:./output/main.bim stack:3136k map:./output/main.map \
-	./output/main.obj 
+	./output/main.obj ./output/helper.obj
 
 hrb: bim
 	./tools/bim2hrb.exe ./output/main.bim ./output/main.hrb 0
