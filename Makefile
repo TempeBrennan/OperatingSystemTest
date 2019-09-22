@@ -15,6 +15,11 @@ nas: ./output/main.gas
 obj: ./output/main.nas
 	./tools/nask.exe ./output/main.nas ./output/main.obj ./output/main.list
 
+bim: ./output/main.obj
+	./tools/obj2bim.exe @./tools/haribote/haribote.rul \
+	out:./output/main.bim stack:3136k map:./output/main.map \
+	./output/main.obj 
+
 img: boot entry
 	./tools/edimg.exe \
 	imgin:./tools/fdimg0at.tek \
