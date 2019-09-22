@@ -61,21 +61,21 @@ call copy
 
 
 ;5. 跳转到bootpack并开始执行main方法
-MOV EBX,bootpack
-MOC ECX,[EBX+16]
-ADD ECX,3
-SHR ECX,2
+MOV EBX,0x00280000
+MOV ECX,[EBX+16]
+ADD ECX,3			
+SHR ECX,2	
 
-JZ skip
-MOV ESI,[EBX+20]
+JZ skip	
+MOV ESI,[EBX+20]	
 ADD ESI,EBX
 
-MOV EDI,[EBX+12]
+MOV EDI,[EBX+12]	
 call copy
 
 skip:
 MOV ESP,[EBX+12]
-JMP DWRD 2*8:0x0000001B
+JMP DWORD 2*8:0x0000001B
 
 copy:
 MOV EAX,[ESI]
