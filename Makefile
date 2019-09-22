@@ -12,6 +12,9 @@ gas: ./src/main.c
 nas: ./output/main.gas
 	./tools/gas2nask.exe -a ./output/main.gas ./output/main.nas
 
+obj: ./output/main.nas
+	./tools/nask.exe ./output/main.nas ./output/main.obj ./output/main.list
+
 img: boot entry
 	./tools/edimg.exe \
 	imgin:./tools/fdimg0at.tek \
