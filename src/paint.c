@@ -52,3 +52,28 @@ void paintText(int x, int y, char* data, char color) {
 		i++;
 	}
 }
+
+void paintCursor(int x, int y) {
+	extern char cursor[16][16];
+	char *p = (char*)0xa0000;
+	int i, j;
+	char* point;
+	char data;
+
+	for (i = 0; i < 16; i++) {
+		for (j = 0; j < 16; j++) {
+			data = *(cursor + i * 16 + j);
+			point = p + (i + y) * 320 + j + x;
+
+			if (*(*(cursor + i) + j) == '*') {
+				*point = 0;
+			}
+			else if (*(*(cursor + i) + j) == 'O') {
+				*point = 15;
+			}
+			else if (*(*(cursor + i) + j) == '.') {
+				*point = 12;
+			}
+		}
+	}
+}

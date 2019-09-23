@@ -9,6 +9,8 @@ void HariMain(void) {
 	paintText(150, 160, "How are you?", 6);
 	paintText(200, 180, "Thank you!", 3);
 
+	paintCursor(100, 70);
+
 	for (;;) {
 		hlt();
 	}
