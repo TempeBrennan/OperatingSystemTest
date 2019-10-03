@@ -3,9 +3,15 @@
 [BITS 32]
 [File "helper.nas"]
 
-		GLOBAL _hlt
+		GLOBAL _hlt,_setGDTR
 [SECTION .text]
 
 _hlt:	;void hlt(void);
 		HLT
+		RET
+
+_setGDTR:	;void setGDTR(int size, int addr);
+		MOV AX,[ESP+4]
+		MOV [ESP+6],AX
+		LGDT [ESP+6]
 		RET
