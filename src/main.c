@@ -16,7 +16,7 @@ void HariMain(void) {
 	paintText(200, 180, "Thank you!", 3);
 
 	paintCursor(100, 70);
-
+	resume();
 	for (;;) {
 		hlt();
 	}
@@ -26,4 +26,9 @@ void init(void) {
 	initGDT();
 	initIDT();
 	initPIC();
+	sti();
+}
+
+void resume(void) {
+	resumePIC();
 }

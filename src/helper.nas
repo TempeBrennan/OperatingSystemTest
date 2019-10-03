@@ -4,6 +4,7 @@
 [File "helper.nas"]
 
 		GLOBAL _hlt,_setGDTR,_setIDTR,_setDataToPort,_getDataFromPort
+		GLOBAL _cli,_sti
 [SECTION .text]
 
 _hlt:	;void hlt(void);
@@ -32,4 +33,12 @@ _getDataFromPort:	;void getDataFromPort(short port);
 		MOV DX,[ESP+4]
 		MOV AL,0
 		IN AL,DX
+		RET
+
+_cli:	;void cli(void);
+		CLI
+		RET
+
+_sti:	;void sti(void);
+		STI
 		RET
