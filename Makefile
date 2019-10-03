@@ -18,10 +18,10 @@ entry: ./src/entry.nas
 helper.obj: ./src/helper.nas
 	./tools/nask.exe ./src/helper.nas ./output/helper.obj
 
-bim: main.obj helper.obj paint.obj hankaku.obj pointer.obj gdt.obj idt.obj pic.obj
+bim: main.obj helper.obj paint.obj hankaku.obj pointer.obj gdt.obj idt.obj pic.obj eventhandler.obj
 	./tools/obj2bim.exe @./tools/haribote/haribote.rul \
 	out:./output/main.bim stack:3136k map:./output/main.map \
-	./output/main.obj ./output/helper.obj ./output/paint.obj ./output/hankaku.obj ./output/pointer.obj ./output/gdt.obj  ./output/idt.obj ./output/pic.obj
+	./output/main.obj ./output/helper.obj ./output/paint.obj ./output/hankaku.obj ./output/pointer.obj ./output/gdt.obj  ./output/idt.obj ./output/pic.obj ./output/eventhandler.obj
 
 hrb: bim
 	./tools/bim2hrb.exe ./output/main.bim ./output/main.hrb 0

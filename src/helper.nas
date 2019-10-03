@@ -5,6 +5,7 @@
 
 		GLOBAL _hlt,_setGDTR,_setIDTR,_setDataToPort,_getDataFromPort
 		GLOBAL _cli,_sti,_int21Handler,_int27Handler,_int2cHandler
+		EXTERN _mouseHandler,_keyboardHandler,_int27handler
 [SECTION .text]
 
 _hlt:	;void hlt(void);
@@ -52,6 +53,7 @@ _int21Handler:	;void int21Handler(void);
 		MOV		AX,SS
 		MOV		DS,AX
 		MOV		ES,AX
+		CALL	_keyboardHandler
 		POP		EAX
 		POPAD
 		POP		DS
@@ -67,6 +69,7 @@ _int27Handler:	;void int27Handler(void);
 		MOV		AX,SS
 		MOV		DS,AX
 		MOV		ES,AX
+		CALL	_int27handler
 		POP		EAX
 		POPAD
 		POP		DS
@@ -82,6 +85,7 @@ _int2cHandler:	;void int2cHandler(void);
 		MOV		AX,SS
 		MOV		DS,AX
 		MOV		ES,AX
+		CALL	_mouseHandler
 		POP		EAX
 		POPAD
 		POP		DS
