@@ -26,5 +26,6 @@ void initSegment() {
 	}
 	*(start + 1) = createSegment(0x00000000, 0xFFFFFFFF, 0x4092);
 	*(start + 2) = createSegment(0x00280000, 0x7FFFF, 0x409A);
+	/* 共8192*8=65536个bit位，65535的16进制就是0xFFFF */
 	setGDTR(0xFFFF, 0x00270000);
 }
