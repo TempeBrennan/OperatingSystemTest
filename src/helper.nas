@@ -4,7 +4,7 @@
 [File "helper.nas"]
 
 		GLOBAL _hlt,_setGDTR,_setIDTR,_setDataToPort,_getDataFromPort
-		GLOBAL _cli,_sti
+		GLOBAL _cli,_sti,_int21Handler,_int27Handler,_int2cHandler
 [SECTION .text]
 
 _hlt:	;void hlt(void);
@@ -42,3 +42,48 @@ _cli:	;void cli(void);
 _sti:	;void sti(void);
 		STI
 		RET
+
+_int21Handler:	;void int21Handler(void);
+		PUSH	ES
+		PUSH	DS
+		PUSHAD
+		MOV		EAX,ESP
+		PUSH	EAX
+		MOV		AX,SS
+		MOV		DS,AX
+		MOV		ES,AX
+		POP		EAX
+		POPAD
+		POP		DS
+		POP		ES
+		IRETD
+
+_int27Handler:	;void int27Handler(void);
+		PUSH	ES
+		PUSH	DS
+		PUSHAD
+		MOV		EAX,ESP
+		PUSH	EAX
+		MOV		AX,SS
+		MOV		DS,AX
+		MOV		ES,AX
+		POP		EAX
+		POPAD
+		POP		DS
+		POP		ES
+		IRETD
+
+_int2cHandler:	;void int2cHandler(void);
+		PUSH	ES
+		PUSH	DS
+		PUSHAD
+		MOV		EAX,ESP
+		PUSH	EAX
+		MOV		AX,SS
+		MOV		DS,AX
+		MOV		ES,AX
+		POP		EAX
+		POPAD
+		POP		DS
+		POP		ES
+		IRETD

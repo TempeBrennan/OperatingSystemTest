@@ -19,6 +19,10 @@ void initIDT(void) {
 		cur++;
 	}
 
+	*(start + 0x21) = createInterruptInfo(2 * 8, (int)int21Handler, 0x008E);
+	*(start + 0x27) = createInterruptInfo(2 * 8, (int)int27Handler, 0x008E);
+	*(start + 0x2C) = createInterruptInfo(2 * 8, (int)int2cHandler, 0x008E);
+
 	/* 共256个块，一块8bit，共2048，2047即0x07FF */
 	setIDTR(0x07FF, 0x00268000);
 }

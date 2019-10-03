@@ -11,3 +11,6 @@ struct InterruptInfo
 struct InterruptInfo createInterruptInfo(short selector, int offset, short access);
 void initIDT(void);
 void setIDTR(int size, int addr);
+void int21Handler(void);
+void int27Handler(void);
+void int2cHandler(void);
