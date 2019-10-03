@@ -23,15 +23,15 @@ _setIDTR:	;void setIDTR(int size, int addr);
 		LIDT [ESP+6]
 		RET	
 
-_setDataToPort:	;void setDataToPort(short port, char data);
-		MOV DX,[ESP+4]
-		MOV AL,[ESP+6]
+_setDataToPort:	;void setDataToPort(int port, int data);
+		MOV EDX,[ESP+4]
+		MOV AL,[ESP+8]
 		OUT DX,AL
 		RET
 
-_getDataFromPort:	;void getDataFromPort(short port);
-		MOV DX,[ESP+4]
-		MOV AL,0
+_getDataFromPort:	;void getDataFromPort(int port);
+		MOV EDX,[ESP+4]
+		MOV EAX,0
 		IN AL,DX
 		RET
 

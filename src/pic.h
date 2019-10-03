@@ -1,3 +1,3 @@
 void initPIC(void);
-void setDataToPort(short port, char data);
+void setDataToPort(int port, int data);
 void resumePIC(void);
