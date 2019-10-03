@@ -7,12 +7,13 @@ struct InterruptInfo createInterruptInfo(short selector, int offset, short acces
 	info.offset_high = (offset >> 16) & 0xFFFF;
 	info.access_right = access & 0xFF;
 	info.count = (access >> 8) & 0xFF;
+	return info;
 }
 
 void initIDT(void) {
 	int i = 0;
-	char* start = 0x00268000;
-	char* cur = start;
+	struct InterruptInfo* start = (struct InterruptInfo*)0x00268000;
+	struct InterruptInfo* cur = start;
 	for (; i < 256; i++) {
 		*(cur) = createInterruptInfo(0, 0, 0);
 		cur++;
