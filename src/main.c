@@ -2,10 +2,11 @@
 #include "gdt.h"
 #include "main.h"
 #include "idt.h"
+#include "pic.h"
 
 void HariMain(void) {
-	initGDT();
-	initIDT();
+	init();
+
 	paintRect(10, 20, 200, 80, 12);
 	paintRect(230, 50, 10, 30, 6);
 	paintRect(150, 100, 90, 30, 3);
@@ -19,4 +20,10 @@ void HariMain(void) {
 	for (;;) {
 		hlt();
 	}
+}
+
+void init(void) {
+	initGDT();
+	initIDT();
+	initPIC();
 }
