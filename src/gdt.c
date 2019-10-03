@@ -15,7 +15,7 @@ struct SegmentInfo createSegment(int addr, int size, short access) {
 	return info;
 }
 
-void initSegment() {
+void initGDT() {
 	int i = 0;
 	struct SegmentInfo *start = (struct SegmentInfo *)0x00270000;
 	struct SegmentInfo *cur = start;

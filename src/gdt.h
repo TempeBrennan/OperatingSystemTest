@@ -10,4 +10,4 @@ struct SegmentInfo {
 
 struct SegmentInfo createSegment(int addr, int size, short access);
 void setGDTR(int size, int addr);
-void initSegment();
+void initGDT();

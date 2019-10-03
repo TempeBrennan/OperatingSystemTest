@@ -4,7 +4,7 @@
 #include "idt.h"
 
 void HariMain(void) {
-	initSegment();
+	initGDT();
 	initIDT();
 	paintRect(10, 20, 200, 80, 12);
 	paintRect(230, 50, 10, 30, 6);
