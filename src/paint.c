@@ -43,7 +43,7 @@ void paintChar(int x, int y, char* data, char color) {
 	}
 }
 
-void paintText(int x, int y, char* data, char color) {
+void paintText(int x, int y, unsigned char* data, char color) {
 	extern char hankaku[4096];
 	int i = 0;
 	while (*(data + i) != 0) {

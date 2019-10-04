@@ -9,7 +9,7 @@ void mouseHandler(void) {
 
 int start = 0;
 void keyboardHandler(void) {
-	char dataArr[4], data;
+	unsigned char dataArr[4], data;
 
 	/* 1. 通知IRQ1中断已经处理完毕*/
 	setDataToPort(0x0020, 0x60 + 1);
