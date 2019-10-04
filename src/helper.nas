@@ -30,7 +30,7 @@ _setDataToPort:	;void setDataToPort(int port, int data);
 		OUT DX,AL
 		RET
 
-_getDataFromPort:	;void getDataFromPort(int port);
+_getDataFromPort:	;int getDataFromPort(int port);
 		MOV EDX,[ESP+4]
 		MOV EAX,0
 		IN AL,DX
