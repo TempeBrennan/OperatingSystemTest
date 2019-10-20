@@ -3,6 +3,7 @@
 #include "main.h"
 #include "idt.h"
 #include "pic.h"
+#include <stdio.h>
 
 void HariMain(void) {
 	init();
@@ -17,8 +18,29 @@ void HariMain(void) {
 
 	paintCursor(100, 70);*/
 	resume();
+	runMessageQueue();
+}
+
+extern struct MessageQueue messageQueue;
+int start = 0;
+void runMessageQueue() {
 	for (;;) {
-		hlt();
+		unsigned char dataArr[40];
+		cli();
+		if (messageQueue.len == 0) {
+			hlt();
+			sti();
+		}
+		else {
+			unsigned char data = messageQueue.data[messageQueue.start];
+			messageQueue.len--;
+			messageQueue.start = (messageQueue.start + 1) % MessageQueueLength;
+			sti();
+
+			sprintf(dataArr, "%02X", data);
+			paintText(0, start, dataArr, 3);
+			start += 16;
+		}
 	}
 }
 
