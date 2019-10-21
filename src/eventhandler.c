@@ -12,6 +12,7 @@ void mouseHandler(void) {
 
 void keyboardHandler(void) {
 	unsigned char data;
+	paintText(0, 0, "User move mouse", 3);
 
 	/* 1. 通知IRQ1中断已经处理完毕*/
 	setDataToPort(0x0020, 0x60 + 1);

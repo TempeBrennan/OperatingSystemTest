@@ -28,5 +28,5 @@ void resumePIC(void) {
 	/* IRQ7~IRQ0 -> 1111 1001 IRQ1对应键盘, IRQ2对应从PIC*/
 	setDataToPort(0x0021, 0xF9);
 	/* IRQ15~IRQ8 -> 1110 1111 IRQ12对应鼠标*/
-	setDataToPort(0x00A1, 0xFF);
+	setDataToPort(0x00A1, 0xEF);
 }

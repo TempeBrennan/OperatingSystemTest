@@ -3,6 +3,7 @@
 #include "main.h"
 #include "idt.h"
 #include "pic.h"
+#include "mouse.h"
 #include <stdio.h>
 
 void HariMain(void) {
@@ -18,6 +19,7 @@ void HariMain(void) {
 
 	paintCursor(100, 70);*/
 	resume();
+	initMouse();
 	runMessageQueue();
 }
 
