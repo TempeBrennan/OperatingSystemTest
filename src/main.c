@@ -24,24 +24,31 @@ void HariMain(void) {
 }
 
 extern struct MessageQueue messageQueue;
-int start = 0;
+extern struct MessageQueue mouseQueue;
+
 void runMessageQueue() {
 	for (;;) {
-		unsigned char dataArr[40];
+		unsigned char dataArr[40], data;
 		cli();
-		if (messageQueue.len == 0) {
+		if (messageQueue.len == 0 && mouseQueue.len == 0) {
 			hlt();
 			sti();
 		}
 		else {
-			unsigned char data = messageQueue.data[messageQueue.start];
-			messageQueue.len--;
-			messageQueue.start = (messageQueue.start + 1) % MessageQueueLength;
+			if (messageQueue.len != 0) {
+				data = messageQueue.data[messageQueue.start];
+				messageQueue.len--;
+				messageQueue.start = (messageQueue.start + 1) % MessageQueueLength;
+			}
+			else if (mouseQueue.len != 0) {
+				data = mouseQueue.data[mouseQueue.start];
+				mouseQueue.len--;
+				mouseQueue.start = (mouseQueue.start + 1) % MessageQueueLength;
+			}
 			sti();
-
+			paintRect(0, 0, 320, 16, 0);
 			sprintf(dataArr, "%02X", data);
-			paintText(0, start, dataArr, 3);
-			start += 16;
+			paintText(0, 0, dataArr, 3);
 		}
 	}
 }

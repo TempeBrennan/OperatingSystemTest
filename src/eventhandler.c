@@ -5,14 +5,26 @@
 #include <stdio.h>
 
 struct MessageQueue messageQueue;
+struct MessageQueue mouseQueue;
 
 void mouseHandler(void) {
-	//paintText(0, 0, "User move mouse", 3);
+	unsigned char data;
+
+	/* 1. 通知IRQ12 IRQ2中断已经处理完毕*/
+	setDataToPort(0x00A0, 0x60 + 4);
+	setDataToPort(0x0020, 0x60 + 2);
+	/* 2. 0x0060对应的设备是键盘*/
+	data = getDataFromPort(0x0060);
+
+	if (mouseQueue.len < MessageQueueLength) {
+		mouseQueue.data[mouseQueue.end] = data;
+		mouseQueue.len++;
+		mouseQueue.end = (mouseQueue.end + 1) % MessageQueueLength;
+	}
 }
 
 void keyboardHandler(void) {
 	unsigned char data;
-	paintText(0, 0, "User move mouse", 3);
 
 	/* 1. 通知IRQ1中断已经处理完毕*/
 	setDataToPort(0x0020, 0x60 + 1);
