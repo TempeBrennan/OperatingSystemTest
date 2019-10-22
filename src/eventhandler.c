@@ -4,7 +4,7 @@
 #include "pic.h"
 #include <stdio.h>
 
-struct MessageQueue messageQueue;
+struct MessageQueue keyboardQueue;
 struct MessageQueue mouseQueue;
 
 void mouseHandler(void) {
@@ -31,10 +31,10 @@ void keyboardHandler(void) {
 	/* 2. 0x0060对应的设备是键盘*/
 	data = getDataFromPort(0x0060);
 
-	if (messageQueue.len < MessageQueueLength) {
-		messageQueue.data[messageQueue.end] = data;
-		messageQueue.len++;
-		messageQueue.end = (messageQueue.end + 1) % MessageQueueLength;
+	if (keyboardQueue.len < MessageQueueLength) {
+		keyboardQueue.data[keyboardQueue.end] = data;
+		keyboardQueue.len++;
+		keyboardQueue.end = (keyboardQueue.end + 1) % MessageQueueLength;
 	}
 }
 

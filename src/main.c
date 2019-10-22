@@ -23,22 +23,22 @@ void HariMain(void) {
 	runMessageQueue();
 }
 
-extern struct MessageQueue messageQueue;
+extern struct MessageQueue keyboardQueue;
 extern struct MessageQueue mouseQueue;
 
 void runMessageQueue() {
 	for (;;) {
 		unsigned char dataArr[40], data;
 		cli();
-		if (messageQueue.len == 0 && mouseQueue.len == 0) {
+		if (keyboardQueue.len == 0 && mouseQueue.len == 0) {
 			hlt();
 			sti();
 		}
 		else {
-			if (messageQueue.len != 0) {
-				data = messageQueue.data[messageQueue.start];
-				messageQueue.len--;
-				messageQueue.start = (messageQueue.start + 1) % MessageQueueLength;
+			if (keyboardQueue.len != 0) {
+				data = keyboardQueue.data[keyboardQueue.start];
+				keyboardQueue.len--;
+				keyboardQueue.start = (keyboardQueue.start + 1) % MessageQueueLength;
 			}
 			else if (mouseQueue.len != 0) {
 				data = mouseQueue.data[mouseQueue.start];
