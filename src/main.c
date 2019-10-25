@@ -28,6 +28,9 @@ extern struct MessageQueue mouseQueue;
 
 void runMessageQueue() {
 	struct MouseMessage mouseMessage;
+	// 初始化鼠标的坐标
+	int x = 40, y = 40;
+	paintCursor(x, y);
 	for (;;) {
 		unsigned char printStr[40], data;
 		cli();
@@ -51,14 +54,60 @@ void runMessageQueue() {
 				mouseQueue.start = (mouseQueue.start + 1) % MessageQueueLength;
 				sti();
 				if (collectMouseMessage(&mouseMessage, data) == 1) {
-					paintRect(0, 0, 320, 16, 0);
-					sprintf(printStr, "%02X %02X %02X",
-						mouseMessage.data[0], mouseMessage.data[1], mouseMessage.data[2]);
-					paintText(0, 0, printStr, 3);
+					updateMouseMessage(&mouseMessage);
+					/*paintRect(0, 0, 320, 16, 0);
+					sprintf(printStr, "mouse state: %3d x: %3d y: %3d",
+						mouseMessage.state, mouseMessage.x, mouseMessage.y);
+					paintText(0, 0, printStr, 3);*/
+					paintRect(x, y, 16, 16, 0);
+					x += mouseMessage.x;
+					y += mouseMessage.y;
+					if (x < 0) {
+						x = 0;
+					}
+					if (y < 0) {
+						y = 0;
+					}
+					if (x > 320 - 16) {
+						x = 320 - 16;
+					}
+					if (y > 200 - 16) {
+						y = 200 - 16;
+					}
+					paintCursor(x, y);
 				}
 			}
 		}
 	}
+}
+
+void updateMouseMessage(struct MouseMessage* mouseMessage) {
+	// 获取按下哪个键需要第一个字节与 00000111 与运算
+	char state = (mouseMessage->data[0] & 0x07);
+	if ((state & 0x01) != 0) {
+		mouseMessage->state = 'L';
+	}
+	else if ((state & 0x02) != 0) {
+		mouseMessage->state = 'R';
+	}
+	else if ((state & 0x04) != 0) {
+		mouseMessage->state = 'C';
+	}
+	else
+	{
+		mouseMessage->state = 'N';
+	}
+
+	mouseMessage->x = mouseMessage->data[1];
+	// 不能对unsigned类型变负数
+	mouseMessage->y = mouseMessage->data[2];
+	if (((mouseMessage->data[0]) & 0x10) != 0) {
+		mouseMessage->x |= 0xFFFFFF00;
+	}
+	else if (((mouseMessage->data[0]) & 0x20) != 0) {
+		mouseMessage->y |= 0xFFFFFF00;
+	}
+	mouseMessage->y = -mouseMessage->y;
 }
 
 //C语言没有bool类型

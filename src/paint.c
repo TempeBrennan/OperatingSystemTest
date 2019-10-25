@@ -72,7 +72,7 @@ void paintCursor(int x, int y) {
 				*point = 15;
 			}
 			else if (*(*(cursor + i) + j) == '.') {
-				*point = 12;
+				*point = 0;
 			}
 		}
 	}

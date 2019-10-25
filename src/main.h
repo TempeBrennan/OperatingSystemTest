@@ -16,5 +16,8 @@ struct MessageQueue {
 struct MouseMessage {
 	unsigned char data[3];
 	unsigned char phase;
+	int x, y;
+	char state;
 };
 int collectMouseMessage(struct MouseMessage* mouseMessage, unsigned char data);
+void updateMouseMessage(struct MouseMessage* mouseMessage);
