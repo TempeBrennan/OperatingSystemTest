@@ -9,7 +9,7 @@ void initPIC(void) {
 	setDataToPort(0x0020, 0x11);
 	setDataToPort(0x0021, 0x20);
 	/* 主PIC的IRQ3连接着从PIC*/
-	setDataToPort(0x0021, 0x08);
+	setDataToPort(0x0021, 1 << 2);
 	setDataToPort(0x0021, 0x01);
 
 	/* 按照这个顺序，会设给从PIC的ICW1~ICW4 */
