@@ -104,7 +104,7 @@ void updateMouseMessage(struct MouseMessage* mouseMessage) {
 	if (((mouseMessage->data[0]) & 0x10) != 0) {
 		mouseMessage->x |= 0xFFFFFF00;
 	}
-	else if (((mouseMessage->data[0]) & 0x20) != 0) {
+	if (((mouseMessage->data[0]) & 0x20) != 0) {
 		mouseMessage->y |= 0xFFFFFF00;
 	}
 	mouseMessage->y = -mouseMessage->y;
