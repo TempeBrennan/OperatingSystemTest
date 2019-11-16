@@ -4,11 +4,25 @@
 #include "idt.h"
 #include "pic.h"
 #include "mouse.h"
+#include "memory.h"
 #include <stdio.h>
 
 void HariMain(void) {
+	unsigned char printStr[40];
 	init();
 
+	int isAbove486 = getIsComputerAbove486();
+	if (isAbove486 == 1) {
+		disableCache();
+	}
+
+	int result = getEndAvailableMemoryAddr(0x00400000, 0xbfffffff) / (1024 * 1024);
+	sprintf(printStr, "memory is %d MB", result);
+	paintText(0, 0, printStr, 6);
+
+	if (isAbove486 == 1) {
+		enableCache();
+	}
 	/*paintRect(10, 20, 200, 80, 12);
 	paintRect(230, 50, 10, 30, 6);
 	paintRect(150, 100, 90, 30, 3);

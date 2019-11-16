@@ -5,6 +5,7 @@
 
 		GLOBAL _hlt,_setGDTR,_setIDTR,_setDataToPort,_getDataFromPort
 		GLOBAL _cli,_sti,_int21Handler,_int27Handler,_int2cHandler
+		GLOBAL _getEFlags,_setEFlags,_getCR0,_setCR0
 		EXTERN _mouseHandler,_keyboardHandler,_int27handler
 [SECTION .text]
 
@@ -91,3 +92,23 @@ _int2cHandler:	;void int2cHandler(void);
 		POP		DS
 		POP		ES
 		IRETD
+
+_getEFlags:		;int getEFlags(void);
+		PUSHFD
+		POP EAX
+		RET
+
+_setEFlags:		;void setEFlags(int eflags);
+		MOV EAX,[ESP+4]
+		PUSH EAX
+		POPFD
+		RET
+
+_getCR0:		;int getCR0(void);
+		MOV EAX,CR0
+		RET
+
+_setCR0:		;void setCR0(int data);
+		MOV EAX,[ESP+4]
+		MOV CR0,EAX
+		RET
