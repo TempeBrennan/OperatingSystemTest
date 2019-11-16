@@ -5,7 +5,7 @@
 
 		GLOBAL _hlt,_setGDTR,_setIDTR,_setDataToPort,_getDataFromPort
 		GLOBAL _cli,_sti,_int21Handler,_int27Handler,_int2cHandler
-		GLOBAL _getEFlags,_setEFlags,_getCR0,_setCR0
+		GLOBAL _getEFlags,_setEFlags,_getCR0,_setCR0,_getEndAvailableMemoryAddr
 		EXTERN _mouseHandler,_keyboardHandler,_int27handler
 [SECTION .text]
 
@@ -112,3 +112,37 @@ _setCR0:		;void setCR0(int data);
 		MOV EAX,[ESP+4]
 		MOV CR0,EAX
 		RET
+
+_getEndAvailableMemoryAddr:		;unsigned int getEndAvailableMemoryAddr(unsigned int startAddr, unsigned int endAddr);
+		PUSH EDI
+		PUSH ESI
+		PUSH EBX
+		MOV ESI, 0xAA55AA55
+		MOV EDI, 0x55AA55AA
+		MOV EAX,[ESP+12+4]
+check:
+		MOV EBX,EAX
+		ADD EBX,0xFFC
+		MOV EDX, [EBX]
+		MOV [EBX], ESI
+		XOR DWORD [EBX], 0xFFFFFFFF
+		CMP [EBX], EDI
+		JNE end
+		XOR DWORD [EBX], 0xFFFFFFFF
+		CMP [EBX], ESI
+		JNE end
+		MOV [EBX], EDX
+		ADD EAX, 0x1000
+		CMP EAX, [ESP+12+8]
+		JBE check
+		POP EBX
+		POP ESI
+		POP EDI
+		RET
+end:
+		MOV [EBX], EDX
+		POP EBX
+		POP ESI
+		POP EDI
+		RET
+
